@@ -1,0 +1,3 @@
+[submodule "vendors/jrac"]
+	path = vendors/jrac
+	url = git@github.com:trepmag/jrac.git

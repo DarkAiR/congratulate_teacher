@@ -1,0 +1,52 @@
+<div class='err-field'><% errorCommon %></div>
+
+<form enctype="multipart/form-data" method='post' action='/'>
+    <div style='width:500px; float:left'>
+        <table border=0 width='500px'>
+            <thead>
+                <tr>
+                    <th width='200px'></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><label for='name'>Имя</label></td>
+                    <td><input type='text' name="name"></td>
+                </tr>
+                <tr>
+                    <td><label for='nameTeacher'>Имя учителя</label></td>
+                    <td><input type='text' name="nameTeacher"></td>
+                </tr>
+                <tr>
+                    <td><label for='school'>Школа</label></td>
+                    <td><input type='text' name="school"></td>
+                </tr>
+                <tr>
+                    <td><label for='year'>Год выпуска</label></td>
+                    <td><input type='text' name="year"></td>
+                </tr>
+                <tr>
+                    <td><label for='photoTeacher'>Фото учителя</label><div class='err-field'><% errorPhotoTeacher %></div></td>
+                    <td><input type='file' name="photoTeacher"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div style='float:left; border-left: 1px dotted #888; padding-left: 100px;'>
+        <label for='background'>Фоновое изображение</label><div class='err-field'><% errorBackground %></div>
+        <div>
+            <input type='radio' name='background' value='1'>
+            <img src='img/fon1.jpg' width='400px' style='vertical-align: top;'>
+        </div>
+        <div>
+            <input type='radio' name='background' value='2'>
+            <img src='img/fon2.jpg' width='400px' style='vertical-align: top;'>
+        </div>
+    </div>
+
+    <div style='clear:both;'></div>
+
+    <input type='hidden' name='form' value='<% formReady %>'>
+    <input type='submit' value='Отправить'>
+</form>
