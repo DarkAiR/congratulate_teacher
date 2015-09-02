@@ -30,13 +30,25 @@
                     <td><label for='photoTeacher'>Фото учителя</label><div class='err-field'><% errorPhotoTeacher %></div></td>
                     <td><input type='file' name="photoTeacher"></td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                        <div id='js-crop-container'>
+                        </div>
+                        <div id='js-crop-preview' style='position: relative; overflow: hidden; width: 99px; height: 132px;'>
+                        </div>
+                        <input type='hidden' name='x1' value=''>
+                        <input type='hidden' name='x2' value=''>
+                        <input type='hidden' name='y1' value=''>
+                        <input type='hidden' name='y2' value=''>
+                    </td>
+                </tr>
             </tbody>
         </table>
     </div>
     <div style='float:left; border-left: 1px dotted #888; padding-left: 100px;'>
         <label for='background'>Фоновое изображение</label><div class='err-field'><% errorBackground %></div>
         <div>
-            <input type='radio' name='background' value='1'>
+            <input type='radio' name='background' value='1' selected='selected'>
             <img src='<% img1 %>' width='400px' style='vertical-align: top;'>
         </div>
         <div>

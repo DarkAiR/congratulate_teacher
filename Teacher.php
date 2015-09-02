@@ -27,10 +27,6 @@ class Teacher
         );
 
         if ($formReady) {
-            //echo '<pre>';
-            //var_dump($_POST);
-            //var_Dump($_FILES);
-            //exit;
             do {
                 $name           = Yii::app()->request->getPost('name', '');
                 $nameTeacher    = Yii::app()->request->getPost('nameTeacher', '');
@@ -103,9 +99,12 @@ class Teacher
     private function renderPage($content)
     {
         $baseTemplate   = Template::load($this->docRoot.'/template/base.html');
+
         $css            = Template::loadCss($this->docRoot.'/css/styles.css');
-        $css           .= Template::loadCss($this->docRoot.'/vendors/jrac/jrac/style.jrac.css');
-        $script         = Template::loadScript($this->docRoot.'/vendors/jrac/jrac/jquery.jrac.js');
+        //$css           .= Template::loadCss($this->docRoot.'/vendors/jrac/jrac/style.jrac.css');
+        
+        $script         = Template::loadScript($this->docRoot.'/js/script.js');
+        //$script        .= Template::loadScript($this->docRoot.'/vendors/jrac/jrac/jquery.jrac.js');
         
         $out = Template::render($baseTemplate, array(
             'css' => $css,
