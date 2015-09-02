@@ -4,6 +4,8 @@ if (!defined('READFILE'))
 
 class Image
 {
+    public static $docRoot = '';
+
     public static function loadImageFromForm($name)
     {
         if ($_FILES[$name]['error'] != UPLOAD_ERR_OK)
@@ -26,9 +28,9 @@ class Image
     {
         switch ($idx) {
             case 1:
-                return 'img/fon1.jpg';
+                return self::$docRoot.'/img/fon1.jpg';
             case 2:
-                return 'img/fon2.jpg';
+                return self::$docRoot.'/img/fon2.jpg';
             default:
                 return false;
         }
@@ -36,12 +38,12 @@ class Image
 
     public static function createImage($baseImageName, $photoImageName, $x, $y, $w, $h)
     {
-        $imageBg = imagecreatefromjpeg($baseImageName);
-        $imagePhoto = imagecreatefromjpeg($photoImageName);
+        $imageBg = @imagecreatefromjpeg($baseImageName);
+        $imagePhoto = @imagecreatefromjpeg($photoImageName);
         if (!$imageBg || !$imagePhoto)
             throw new Exception('Ошибка создания изображения (1)');
 
-        if (!imagecopymerge($imageBg, $imagePhoto, $x, $y, 0, 0, $w, $h, 100))
+        if (!@imagecopymerge($imageBg, $imagePhoto, $x, $y, 0, 0, $w, $h, 100))
             throw new Exception('Ошибка создания изображения (2)');
 
         return $imageBg;
@@ -49,14 +51,18 @@ class Image
 
     public static function appendText($image, $text, $x, $y)
     {
-        if (!imagettftext($image, 15, 0, $x, $y, 0x00ff00, $_SERVER['DOCUMENT_ROOT'].'/fonts/arial.ttf', "hello\nWORLD!!!"))
+        if (!@imagettftext($image, 15, 0, $x, $y, 0x00ff00, self::$docRoot.'/fonts/arial.ttf', "hello\nWORLD!!!"))
             throw new Exception('Ошибка создания изображения (3)');
         return $image;
     }
 
     public static function saveResultImage($name, $image)
     {
-        $uploadDir = $_SERVER['DOCUMENT_ROOT'].'/upload/';
+        $uploadDir = self::$docRoot.'/upload/';
+
+        if (!is_dir($uploadDir)) {
+            mkdir($uploadDir);
+        }
 
         $ext = pathinfo($_FILES[$name]['name'], PATHINFO_EXTENSION);
         $filename = md5($name.time());
@@ -64,5 +70,16 @@ class Image
             throw new Exception('Ошибка создания изображения (4)');
 
         return $filename.'.'.$ext;
+    }
+
+    public static function getImageContent($image)
+    {
+        ob_start();
+        imagejpeg($image);
+        $str = ob_get_contents();
+        ob_end_clean();
+
+        $str = 'data:image/png;base64,'.base64_encode($str);
+        return $str;
     }
 }

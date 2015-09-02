@@ -6,16 +6,38 @@ class Template
 {
     public static function load($path)
     {
-        $DR = $_SERVER['DOCUMENT_ROOT'];
-
-        if ($path[0] != '/')
-            $path = '/'.$path;
-
         ob_start();
-        include $DR.$path;
+        include $path;
         $template = ob_get_contents();
         ob_end_clean();
         return $template;
+    }
+
+    public static function loadScript($path)
+    {
+        $str = @file_get_contents($path);
+        if (!$str)
+            return '';
+        $str = '<script type="text/javascript">'.$str.'</script>';
+        return $str;
+    }
+
+    public function loadCss($path)
+    {
+        $str = @file_get_contents($path);
+        if (!$str)
+            return '';
+        $str = '<style type="text/css">'.$str.'</style>';
+        return $str;
+    }
+
+    public static function loadImage($path)
+    {
+        $str = @file_get_contents($path);
+        if (!$str)
+            return '';
+        $str = 'data:image/png;base64,'.base64_encode($str);
+        return $str;
     }
 
     public static function render($template, $params=array())

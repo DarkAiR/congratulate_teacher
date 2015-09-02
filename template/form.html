@@ -1,6 +1,6 @@
 <div class='err-field'><% errorCommon %></div>
 
-<form enctype="multipart/form-data" method='post' action='/'>
+<form enctype="multipart/form-data" method='post' action='<% action %>'>
     <div style='width:500px; float:left'>
         <table border=0 width='500px'>
             <thead>
@@ -37,11 +37,11 @@
         <label for='background'>Фоновое изображение</label><div class='err-field'><% errorBackground %></div>
         <div>
             <input type='radio' name='background' value='1'>
-            <img src='img/fon1.jpg' width='400px' style='vertical-align: top;'>
+            <img src='<% img1 %>' width='400px' style='vertical-align: top;'>
         </div>
         <div>
             <input type='radio' name='background' value='2'>
-            <img src='img/fon2.jpg' width='400px' style='vertical-align: top;'>
+            <img src='<% img2 %>' width='400px' style='vertical-align: top;'>
         </div>
     </div>
 
