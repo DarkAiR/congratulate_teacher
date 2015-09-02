@@ -1,7 +1,8 @@
 $(document).ready(function() {
     
-    var previewW = $('#js-crop-preview').width();
-    var previewH = $('#js-crop-preview').height();
+    var previewW = 0;
+    var previewH = 0;
+    var cropReady = false;
 
     // Dynamic loading image
     $('[name="photoTeacher"]').change( function(e) {
@@ -19,11 +20,8 @@ $(document).ready(function() {
             image.src = 'data:image/png;base64,'+ content;
             $('#js-crop-container').html('').append(image);
 
-            var previewImage = document.createElement('img');
-            previewImage.setAttribute('width', previewW+'px');
-            previewImage.setAttribute('height', previewH+'px');
-            previewImage.src = 'data:image/png;base64,'+ content;
-            $('#js-crop-preview').html('').append(previewImage);
+            var bgImage = $("[name='background']:checked + img");
+            initPreview(bgImage, image);
 
             $('#js-crop-container img').imgAreaSelect({
                 handles: true,
@@ -52,7 +50,47 @@ $(document).ready(function() {
                     $('input[name="y2"]').val(selection.y2);            
                 }
             });
+
+            cropReady = true;
         }
         reader.readAsBinaryString(file);
     });
+
+
+    // Processing change background
+    $("[name='background']").change(function(e) {
+        if (cropReady) {
+            var bgImage = $("[name='background']:checked + img");
+            var img = $('#js-crop-container img').get(0);
+            initPreview(bgImage, img);
+        }
+        return true;
+    });
+
+    initPreview = function(bgImage, image)
+    {
+        previewW = bgImage.data('w');
+        previewH = bgImage.data('h');
+
+        var style = $('#js-crop-preview img') ? $('#js-crop-preview img').attr('style') : '';
+
+        $('#js-crop-preview').css({
+            'left': bgImage.data('x'),
+            'top': bgImage.data('y'),
+            'width': previewW,
+            'height': previewH,
+        });
+
+        var previewImage = $(image).clone();
+        previewImage.attr({'style':style});
+        previewImage.attr({
+            'width': previewW+'px',
+            'height': previewH+'px'
+        });
+        $('#js-crop-preview').html('').append(previewImage);
+
+        bgImage = bgImage.clone();
+        bgImage.removeAttr('width');
+        $('#js-bg-preview').html('').append(bgImage.clone());
+    }
 });

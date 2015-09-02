@@ -79,13 +79,26 @@ class Teacher
         }
 
         // Рендерим форму
-        $img1   = Template::loadImage($this->docRoot.'/img/fon1.jpg');
-        $img2   = Template::loadImage($this->docRoot.'/img/fon2.jpg');
+        $img1       = Template::loadImage($this->getBackgroundImage(1));
+        $img2       = Template::loadImage($this->getBackgroundImage(2));
+        $imgInfo1   = $this->getBackgroundImageInfo(1);
+        $imgInfo2   = $this->getBackgroundImageInfo(2);
         $formTemplate = Template::load($this->docRoot."/template/form.html");
         $formTemplate = Template::render($formTemplate, array(
             'action' => $_SERVER['REQUEST_URI'],
+            
             'img1' => $img1,
+            'img1x' => $imgInfo1['x'],
+            'img1y' => $imgInfo1['y'],
+            'img1w' => $imgInfo1['w'],
+            'img1h' => $imgInfo1['h'],
+
             'img2' => $img2,
+            'img2x' => $imgInfo2['x'],
+            'img2y' => $imgInfo2['y'],
+            'img2w' => $imgInfo2['w'],
+            'img2h' => $imgInfo2['h'],
+
             'formReady' => 1,
             'errorCommon' => $errors['common'],
             'errorPhotoTeacher' => $errors['photoTeacher'],
@@ -95,6 +108,37 @@ class Teacher
         $this->renderPage($formTemplate);
     }
 
+    private function getBackgroundImage($idx)
+    {
+       $info = $this->getBackgroundImageInfo($idx);
+        if (!$info)
+            return false;
+        return $info['img'];
+    }
+
+    private function getBackgroundImageInfo($idx)
+    {
+        switch ($idx) {
+            case 1:
+                return array(
+                    'img' => $this->docRoot.'/img/fon1.png',
+                    'x' => 70,
+                    'y' => 40,
+                    'w' => 190,
+                    'h' => 230
+                );
+            case 2:
+                return array(
+                    'img' => $this->docRoot.'/img/fon2.png',
+                    'x' => 40,
+                    'y' => 30,
+                    'w' => 190,
+                    'h' => 230
+                );
+            default:
+                return false;
+        }
+    }
 
     private function renderPage($content)
     {

@@ -34,8 +34,6 @@
                     <td colspan="2">
                         <div id='js-crop-container'>
                         </div>
-                        <div id='js-crop-preview' style='position: relative; overflow: hidden; width: 99px; height: 132px;'>
-                        </div>
                         <input type='hidden' name='x1' value=''>
                         <input type='hidden' name='x2' value=''>
                         <input type='hidden' name='y1' value=''>
@@ -45,15 +43,25 @@
             </tbody>
         </table>
     </div>
+
     <div style='float:left; border-left: 1px dotted #888; padding-left: 100px;'>
         <label for='background'>Фоновое изображение</label><div class='err-field'><% errorBackground %></div>
         <div>
             <input type='radio' name='background' value='1' checked="checked">
-            <img src='<% img1 %>' width='400px' style='vertical-align: top;'>
+            <img src='<% img1 %>' width='400px' style='vertical-align: top;' data-x='<% img1x %>' data-y='<% img1y %>' data-w='<% img1w %>' data-h='<% img1h %>'>
         </div>
         <div>
             <input type='radio' name='background' value='2'>
-            <img src='<% img2 %>' width='400px' style='vertical-align: top;'>
+            <img src='<% img2 %>' width='400px' style='vertical-align: top;' data-x='<% img2x %>' data-y='<% img2y %>' data-w='<% img2w %>' data-h='<% img2h %>'>
+        </div>
+    </div>
+
+    <div style='float:left; border-left: 1px dotted #888; padding-left: 100px;'>
+        <div style='position:relative'>
+            <div id='js-crop-preview' style='position: absolute; left: 0; top: 0; overflow: hidden;'>
+            </div>
+            <div id='js-bg-preview' style='position: absolute; left: 0; top: 0;'>
+            </div>
         </div>
     </div>
 

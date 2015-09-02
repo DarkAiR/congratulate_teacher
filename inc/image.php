@@ -24,18 +24,6 @@ class Image
         return array('image' => $fileName, 'w' => $size[0], 'h' => $size[1]);
     }
 
-    public static function getBackgroundImage($idx)
-    {
-        switch ($idx) {
-            case 1:
-                return self::$docRoot.'/img/fon1.jpg';
-            case 2:
-                return self::$docRoot.'/img/fon2.jpg';
-            default:
-                return false;
-        }
-    }
-
     public static function createImage($baseImageName, $photoImageName, $x, $y, $w, $h)
     {
         $imageBg = @imagecreatefromjpeg($baseImageName);
